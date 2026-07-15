@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "headed": "npx playwright test --headed"
+    "headed": "npx playwright test --headed",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "test:list": "playwright test --list"
+
   },
   "keywords": [],
   "author": "",
