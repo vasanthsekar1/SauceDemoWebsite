@@ -17,7 +17,7 @@ export class InventoryPage {
    }
 
    async verifyLogout() {
-       await expect(this.page).toHaveURL(/home/);
+       await expect(this.page).toHaveURL("/");
    }
 
    async navigateToHomePage() {
