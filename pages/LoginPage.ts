@@ -1,35 +1,31 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class LoginPage {
-  constructor(private page: Page) {}
+   private page:Page
+   private readonly username:Locator
+   private readonly password:Locator
+   private readonly loginButton:Locator
+   private readonly errorMessage:Locator
 
-  readonly username = () =>
-    this.page.locator('[data-test="username"]');
-
-  readonly password = () =>
-    this.page.locator('[data-test="password"]');
-
-  readonly loginButton = () =>
-    this.page.locator('[data-test="login-button"]');
-
-  readonly errorMessage = () =>
-    this.page.locator('[data-test="error"]');
-
-  async navigateToLoginPage() {
-    await this.page.goto("/");
+  constructor(page: Page) {
+   this.page=page
+   this.username =this.page.getByPlaceholder("Username")
+   this.password =this.page.getByPlaceholder("Password")
+   this.loginButton = this.page.getByRole("button", { name: "Login" })
+   this.errorMessage =this.page.getByTestId("error")
   }
 
   async login(username: string, password: string) {
-    await this.username().fill(username);
-    await this.password().fill(password);
-    await this.loginButton().click();
+    await this.username.fill(username)
+    await this.password.fill(password)
+    await this.loginButton.click()
   }
 
   async verifySuccessfulLogin() {
-    await expect(this.page).toHaveURL(/inventory/);
+    await expect(this.page).toHaveURL(/inventory/)
   }
 
   async verifyErrorMessage() {
-    await expect(this.errorMessage()).toBeVisible();
+    await expect(this.errorMessage).toBeVisible()
   }
 }

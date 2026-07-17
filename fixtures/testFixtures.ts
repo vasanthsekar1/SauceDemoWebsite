@@ -1,16 +1,15 @@
 import { test as base } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
+export { expect } from "@playwright/test";
+import { PageManager } from "../pages/pageManager";
+
 
 type Fixtures = {
-  loginPage: LoginPage;
+  pom: PageManager;
 };
 
 export const test = base.extend<Fixtures>({
-  loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-
-    await use(loginPage);
-  }
+  pom: async ({ page }, use) => {
+    await page.goto("/")
+    await use(new PageManager(page));
+  },
 });
-
-export { expect } from "@playwright/test";
