@@ -1,14 +1,18 @@
-import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
+import { defineConfig, devices } from '@playwright/test'
+import dotenv from 'dotenv'
 
 dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
-
+  reporter: [
+    ["list"],
+    ["json", {
+      outputFile: "playwright-report/results.json"
+    }]],
   use: {
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: process.env.HEADLESS === 'true',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'on-first-retry',
